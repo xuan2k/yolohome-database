@@ -116,9 +116,10 @@ class IOTDatabase():
 
     def _update_data(self, 
                      collection, 
+                     data : dict, 
                      query, 
-                     data, 
                      mode = "first"):
+        data = {"$set" : data}
         if mode == "first":
             self.database[collection].update_one(query, data)
         elif mode == "many":

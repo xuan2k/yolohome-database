@@ -24,7 +24,7 @@ class User():
         self.data["_id"] = "user{:05d}".format(get_id)
         collection._add_data("user_list", self.data)
 
-    def _update_callback(self, 
+    def _update_callback_(self, 
                          collection, 
                          updated_data, 
                          query = None, 
@@ -63,14 +63,14 @@ class User():
                     self.data[k] = updated_data[k]
 
 
-        collection._update_data(self, "user_list", self.data, query, mode)
+        collection._update_data("user_list", self.data, query, mode)
 
     def _remove_callback_(self, 
                           collection,
                           query,
                           mode):
         
-        collection._remove_data(self, query, mode)
+        collection._remove_data("user_list", query, mode)
 
     def load_data(self, 
                   load_data : dict):
@@ -99,8 +99,8 @@ class Device():
                  time_activated : str = None,
                  time_deactivated : str = None):
 
-        self.devices = ["temp_sensor", "humid_sensor", "light_sensor", "movement_sensor", "led", "fan", "door"]
-        self.feed_id = {}
+        self.devices = ["temp-sensor", "humid-sensor", "light-sensor", "movement-sensor", "led", "fan", "door"]
+        self.feed_id = None
 
         if type not in self.devices:
             message = "Unknown device in this database. Available device are {}".format(i for i in self.devices)
@@ -139,13 +139,13 @@ class Device():
         query = {"type" : self.data["type"]}
         get_id = collection._count_data("device_list", query)
         
-        self.feed_id["id"] = "{}.{}{:05d}".format(self.data["home_id"], self.data["type"],get_id)
+        self.feed_id = "{}{:05d}".format(self.data["type"],get_id)
 
         self.data["_id"] = self.feed_id
 
         collection._add_data("device_list", self.data)
 
-    def _update_callback(self, 
+    def _update_callback_(self, 
                          collection, 
                          updated_data, 
                          query = None, 
@@ -186,14 +186,14 @@ class Device():
                 else:
                     self.data[k] = updated_data[k]
                 
-        collection._update_data(self, "device_list", self.data, query, mode)
+        collection._update_data("device_list", self.data, query, mode)
 
     def _remove_callback_(self, 
                           collection,
                           query,
                           mode):
         
-        collection._remove_data(self, query, mode)
+        collection._remove_data("device_list", query, mode)
     
     
     def load_data(self, 
@@ -237,7 +237,7 @@ class Home():
 
         collection._add_data("home_list", self.data)
 
-    def _update_callback(self, 
+    def _update_callback_(self, 
                          collection, 
                          updated_data, 
                          query = None, 
@@ -254,7 +254,7 @@ class Home():
             if k in updated_data.keys():
                 self.data[k] = updated_data[k]
 
-        collection._update_data(self, "home_list", self.data, query, mode)
+        collection._update_data("home_list", self.data, query, mode)
 
 
     def _remove_callback_(self, 
@@ -262,7 +262,7 @@ class Home():
                           query,
                           mode):
         
-        collection._remove_data(self, query, mode)
+        collection._remove_data("home_list", query, mode)
 
     def load_data(self, 
                   load_data : dict):
@@ -310,7 +310,7 @@ class Room():
 
         collection._add_data("home_list", self.data)
 
-    def _update_callback(self, 
+    def _update_callback_(self, 
                          collection, 
                          updated_data, 
                          query = None, 
@@ -327,7 +327,7 @@ class Room():
             if k in updated_data.keys():
                 self.data[k] = updated_data[k]
 
-        collection._update_data(self, "room_list", self.data, query, mode)
+        collection._update_data("room_list", self.data, query, mode)
 
 
     def _remove_callback_(self, 
@@ -335,7 +335,7 @@ class Room():
                           query,
                           mode):
         
-        collection._remove_data(self, query, mode)
+        collection._remove_data("room_list", query, mode)
 
     def load_data(self, 
                   load_data : dict):
